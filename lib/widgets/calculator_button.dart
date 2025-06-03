@@ -21,9 +21,9 @@ class CalculatorButton extends StatelessWidget {
         backgroundColor: color ?? AppConstants.buttonColor, // White or orange
         foregroundColor: AppConstants.textColor, // Black text
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15), // More rounded corners
+          borderRadius: BorderRadius.circular(25), // Minimal rounding
         ),
-        elevation: 5, // Slight shadow for raised effect
+        elevation: 0, // Flat design, no shadow
         padding: const EdgeInsets.all(AppConstants.buttonPadding),
       ),
       child: Text(

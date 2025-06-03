@@ -62,7 +62,7 @@ class CalculatorModel {
           _calculation = '';
         }
       }
-    } else if (['+', '-', '*', '/'].contains(value)) {
+    } else if (['+', '−', '×', '÷', '%'].contains(value)) {
       if (_operator.isNotEmpty && !_isOperatorPressed) {
         // Chain calculations
         try {
@@ -117,12 +117,14 @@ class CalculatorModel {
     switch (_operator) {
       case '+':
         return _num1 + _num2;
-      case '-':
+      case '−':
         return _num1 - _num2;
-      case '*':
+      case '×':
         return _num1 * _num2;
-      case '/':
+      case '÷':
         return _num2 != 0 ? _num1 / _num2 : double.infinity;
+      case '%':
+        return _num2 != 0 ? _num1 % _num2 : double.infinity; // Modulo operation
       default:
         return 0;
     }

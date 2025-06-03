@@ -17,41 +17,40 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   void _showHistoryDialog() {
     showDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Calculation History'),
-          content: Container(
-            width: double.maxFinite,
-            height: 300,
-            child: ListView.builder(
-              itemCount: _model.history.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    _model.history[_model.history.length -
-                        1 -
-                        index], // Reverse order (latest first)
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                );
-              },
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Calculation History'),
+            content: Container(
+              width: double.maxFinite,
+              height: 300,
+              child: ListView.builder(
+                itemCount: _model.history.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      _model.history[_model.history.length -
+                          1 -
+                          index], // Reverse order (latest first)
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  );
+                },
+              ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Close'),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppConstants.backgroundColor, // Gray background
+      backgroundColor: const Color.fromARGB(255, 1, 7, 14), // Gray background
       body: SafeArea(
         child: Column(
           children: [
@@ -59,7 +58,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(AppConstants.displayPadding),
-              color: AppConstants.displayBackground,
+              color: const Color.fromARGB(255, 15, 0, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -68,59 +67,33 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     _model.calculation,
                     style: TextStyle(
                       fontSize: AppConstants.calculationFontSize,
-                      color: AppConstants.textColor.withOpacity(0.7),
+                      color: const Color.fromARGB(
+                        255,
+                        252,
+                        250,
+                        250,
+                      ).withOpacity(0.7),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 150),
                   // Current input/result
                   Text(
                     _model.display,
                     style: TextStyle(
                       fontSize: AppConstants.displayFontSize,
                       fontWeight: FontWeight.bold,
-                      color: AppConstants.textColor,
+                      color: const Color.fromARGB(255, 250, 246, 246),
                     ),
                   ),
                 ],
               ),
             ),
-            // Action buttons (AC, Backspace, History)
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppConstants.gridSpacing,
-                vertical: 5,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children:
-                    AppConstants.actionButtonLabels.map((label) {
-                      return Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: CalculatorButton(
-                            text: label,
-                            onPressed: (value) {
-                              setState(() {
-                                if (value == 'H') {
-                                  _showHistoryDialog();
-                                } else {
-                                  _model.processInput(value);
-                                }
-                              });
-                            },
-                            color: _getActionButtonColor(label),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-              ),
-            ),
-            // Button grid
+            // Button grid (4x5 to match the image)
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(AppConstants.gridSpacing),
                 child: GridView.count(
-                  crossAxisCount: 4,
+                  crossAxisCount: 4, // 4 columns to match the image
                   crossAxisSpacing: AppConstants.gridSpacing,
                   mainAxisSpacing: AppConstants.gridSpacing,
                   children:
@@ -129,7 +102,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           text: label,
                           onPressed: (value) {
                             setState(() {
-                              _model.processInput(value);
+                              if (value == 'H') {
+                                _showHistoryDialog();
+                              } else {
+                                _model.processInput(value);
+                              }
                             });
                           },
                           color: _getButtonColor(label),
@@ -144,16 +121,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     );
   }
 
-  // Determine button color for main grid
+  // Determine button color based on label
   Color _getButtonColor(String label) {
-    if (['+', '-', '*', '/'].contains(label)) return AppConstants.operatorColor;
+    if (label == 'H') return AppConstants.historyColor;
+    if (['AC', '%', '÷', '×', '−', '+'].contains(label))
+      return AppConstants.operatorColor;
     if (label == '=') return AppConstants.equalsColor;
     return AppConstants.buttonColor;
-  }
-
-  // Determine button color for action buttons
-  Color _getActionButtonColor(String label) {
-    if (label == 'H') return AppConstants.historyColor;
-    return AppConstants.clearColor;
   }
 }
