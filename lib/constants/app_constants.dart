@@ -22,7 +22,7 @@ class AppConstants {
   static const double gridSpacing = 8.0; // Slightly tighter spacing
   static const double displayPadding = 15.0; // Reduced display padding
 
-  // Button labels (5x4 grid matching the image)
+  // Button labels (4x5 grid matching the image)
   static const List<String> buttonLabels = [
     'AC',
     '⌫',
@@ -35,7 +35,7 @@ class AppConstants {
     '4',
     '5',
     '6',
-    '-',
+    '−',
     '1',
     '2',
     '3',

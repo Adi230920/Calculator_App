@@ -1,6 +1,10 @@
 class CalculatorLogic {
-  // Format number to remove trailing zeros
+  // Format number: integers without decimals, decimals with full precision
   static String formatNumber(double number) {
-    return number.toStringAsFixed(2).replaceAll('.00', '');
+    if (number == number.toInt()) {
+      return number.toInt().toString(); // Display integers without decimals
+    } else {
+      return number.toString(); // Display decimals with full precision
+    }
   }
 }

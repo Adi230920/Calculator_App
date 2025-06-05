@@ -1,3 +1,5 @@
+import '../utils/calculator_logic.dart';
+
 class CalculatorModel {
   double _num1 = 0; // First operand
   double _num2 = 0; // Second operand
@@ -46,10 +48,12 @@ class CalculatorModel {
           _num2 = double.parse(_display);
           double result = _calculate();
           if (result.isInfinite || result.isNaN) {
-            _display = 'Error';
+            _display = 'Infinity';
             _calculation = '';
           } else {
-            _display = result.toStringAsFixed(2).replaceAll('.00', '');
+            _display = CalculatorLogic.formatNumber(
+              result,
+            ); // Use new formatting
             _calculation = '$_num1 $_operator $_num2 =';
             // Add to history
             _addToHistory('$_num1 $_operator $_num2 = $_display');
@@ -75,10 +79,10 @@ class CalculatorModel {
           }
           // Add intermediate result to history
           _addToHistory(
-            '$_num1 $_operator $_num2 = ${result.toStringAsFixed(2).replaceAll('.00', '')}',
+            '$_num1 $_operator $_num2 = ${CalculatorLogic.formatNumber(result)}',
           );
           _num1 = result;
-          _display = result.toStringAsFixed(2).replaceAll('.00', '');
+          _display = CalculatorLogic.formatNumber(result); // Use new formatting
         } catch (e) {
           _display = 'Error';
           _calculation = '';
