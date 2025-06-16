@@ -105,8 +105,9 @@ class CalculatorModel {
         _display = value;
         _isOperatorPressed = false;
       } else {
-        if (value == '.' && _display.contains('.'))
+        if (value == '.' && _display.contains('.')) {
           return _display; // Prevent multiple decimals
+        }
         _display += value;
       }
       if (_operator.isNotEmpty) {

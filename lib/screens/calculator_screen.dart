@@ -20,7 +20,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       builder:
           (context) => AlertDialog(
             title: const Text('Calculation History'),
-            content: Container(
+            content: SizedBox(
               width: double.maxFinite,
               height: 300,
               child: ListView.builder(
@@ -128,8 +128,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   // Determine button color based on label
   Color _getButtonColor(String label) {
     if (label == '=') return AppConstants.equalsColor; // Full orange for '='
-    if (label == 'H')
+    if (label == 'H') {
       return const Color.fromARGB(255, 17, 17, 17); // Grey for history
+    }
     return const Color.fromARGB(
       255,
       14,
